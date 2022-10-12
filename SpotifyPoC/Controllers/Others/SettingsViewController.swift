@@ -55,11 +55,36 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         })]))
         
-        sections.append(Section(title: "Account", options: [Option(title: "Sign Out", handler: {[weak self] in
+        sections.append(Section(title: "Player Functions", options: [Option(title: "Get Active Devices", handler: {[weak self] in
             DispatchQueue.main.async {
-                
+                self?.viewDevices()
+            }
+        }), Option(title: "Get Player Status", handler: {[weak self] in
+            DispatchQueue.main.async {
+                self?.viewPlayer()
+            }
+        }), Option(title: "Pause Music", handler: {[weak self] in
+            DispatchQueue.main.async {
+                self?.viewPause()
+            }
+        }), Option(title: "Play Music", handler: {[weak self] in
+            DispatchQueue.main.async {
+                self?.viewPlay()
             }
         })]))
+        
+        sections.append(Section(title: "Account", options: [Option(title: "Sign Out", handler: {[weak self] in
+            DispatchQueue.main.async {
+                print("Sing Out... supposedly")
+            }
+        })]))
+    }
+    
+    private func viewPlayer(){
+        let vc = CatalyzePlayerViewController()
+        vc.title = "Player"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func viewSongInput(){
@@ -96,6 +121,61 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    private func viewDevices(){
+//        let vc = CatalyzeViewController()
+//        vc.title = "Catalyze"
+//        vc.navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.pushViewController(vc, animated: true)
+        
+        APICaller.shared.getDevices { [weak self] result in
+            DispatchQueue.main.async{
+                switch result {
+                case .success(let model):
+//                    print(model.devices[0].id)
+                    for devices in model.devices{
+                        if devices.is_active == true{
+                            print(devices.id)
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func viewPause(){
+//        let vc = CatalyzeViewController()
+//        vc.title = "Catalyze"
+//        vc.navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.pushViewController(vc, animated: true)
+        
+        APICaller.shared.pausePlayback {success in
+            if success {
+                print("Created Playlist")
+            }
+            else {
+                print("Playlist creation failed")
+            }
+        }
+    }
+    private func viewPlay(){
+//        let vc = CatalyzeViewController()
+//        vc.title = "Catalyze"
+//        vc.navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.pushViewController(vc, animated: true)
+        
+        APICaller.shared.playPlayback {success in
+            if success {
+                print("Created Playlist")
+            }
+            else {
+                print("Playlist creation failed")
+            }
+        }
+    }
+    
     
     private func viewProfile(){
         let vc = ProfileViewController()

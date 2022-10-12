@@ -5,7 +5,7 @@
 //  Created by Adrian Richton Co on 9/22/22.
 //
 
-import SDWebImage
+//import SDWebImage
 import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         headerView.addSubview(imageView)
         imageView.center = headerView.center
         imageView.contentMode = .scaleAspectFill
-        imageView.sd_setImage(with: url, completed: nil)
+//        imageView.sd_setImage(with: url, completed: nil)
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = imageSize/2
         

@@ -7,6 +7,31 @@
 
 import Foundation
 
+extension TimeInterval {
+    var hourMinuteSecondMS: String {
+        String(format:"%d:%02d:%02d.%03d", hour, minute, second, millisecond)
+    }
+    var minuteSecond: String {
+        String(format:"%d:%02d", minute, second)
+    }
+    var hour: Int {
+        Int((self/3600).truncatingRemainder(dividingBy: 3600))
+    }
+    var minute: Int {
+        Int((self/60).truncatingRemainder(dividingBy: 60))
+    }
+    var second: Int {
+        Int(truncatingRemainder(dividingBy: 60))
+    }
+    var millisecond: Int {
+        Int((self*1000).truncatingRemainder(dividingBy: 1000))
+    }
+}
+
+extension Int {
+    var msToSeconds: Double { Double(self) / 1000 }
+}
+
 final class APICaller {
     static let shared = APICaller()
     
@@ -14,7 +39,6 @@ final class APICaller {
     
     struct Constants{
         static let baseAPIURL = "https://api.spotify.com/v1"
-        static var playlistID = ""
     }
     
     struct CatalyzeConstants{ // Data needed for Catalyst dump
@@ -47,6 +71,10 @@ final class APICaller {
         
         static var playlistID = ""
         
+    }
+    
+    struct PlaybackConstants{
+        static var deviceID = ""
     }
     
     enum APIError: Error{
@@ -378,6 +406,168 @@ final class APICaller {
     
 }
     
+    //MARK: - Playback
+    
+    public func getDevices(completion: @escaping (Result<UserDevices, Error>) -> Void){
+        
+        let getDevicesURL = Constants.baseAPIURL + "/me/player/devices"
+        
+        createRequest(with: URL(string: getDevicesURL), type: .GET) { baseRequest in
+            
+            print("Creating Task")
+            let task = URLSession.shared.dataTask(with: baseRequest) { data, _,error in
+                print("Task created")
+                guard let data = data, error == nil else{
+                    print("Failed to get data")
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    print("Extracting JSON")
+                    let temp = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    print(temp)
+                    let result = try JSONDecoder().decode(UserDevices.self, from: data)
+                    print(result)
+                    for devices in result.devices{
+                        if devices.is_active == true{
+                            PlaybackConstants.deviceID = devices.id
+                        }
+                    }
+                    completion(.success(result))
+                    
+                }
+                catch{
+                    completion(.failure(error))
+                }
+                
+            }
+            task.resume()
+            
+        }
+    }
+    
+    public func getPlayerState(completion: @escaping (Result<Player, Error>) -> Void){
+//        var deviceID: String
+        self.getDevices{ result in
+               DispatchQueue.main.async{
+                   switch result {
+                   case .success(let model):
+                       print("Device ID Extracted")
+                   case .failure(let error):
+                       
+                       print(error.localizedDescription)
+                   }
+               }
+           }
+        
+        let playerStateURL = Constants.baseAPIURL + "/me/player?market=ES"
+        print(playerStateURL)
+        print(PlaybackConstants.deviceID)
+        
+        
+        createRequest(with: URL(string: playerStateURL), type: .GET){ request in
+            
+//            var request = baseRequest
+//            let json = [
+//                "device_ids": "e57616967795502f239e269210e37a1b918c5ab9"
+////                "play": "True"
+//            ]
+            
+//            request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let status = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    let result = try JSONDecoder().decode(Player.self, from: data)
+                    var durationD = result.item.duration_ms
+                    let duration = Int(durationD).msToSeconds.minuteSecond
+                    let progressD = result.progress_ms
+                    let progress = Int(progressD).msToSeconds.minuteSecond
+                    print("Song: \(result.item.name)")
+                    print("Duration: \(progress) of \(duration)")
+                    
+                    completion(.success(result))
+                }
+                catch{
+                    print(error.localizedDescription)
+                    completion(.failure(APIError.failedToGetData))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func useCurrentSong(){
+        
+        self.getPlayerState{ result in
+               DispatchQueue.main.async{
+                   switch result {
+                   case .success(let model):
+//                       model.
+                       print("Device ID Extracted")
+                   case .failure(let error):
+                       
+                       print(error.localizedDescription)
+                   }
+               }
+           }
+        
+    }
+    
+    public func pausePlayback(completion: @escaping (Bool) -> Void) {
+        print("Getting new releases")
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/player/pause"), type: .PUT) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    print("error")
+                    completion(true)
+                    return
+                }
+                do {
+                    print("Converting to json")
+                    let releases = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print("success")
+                    print(releases)
+                }
+                catch {
+                    print("error")
+                    completion(false)
+                }
+            }
+            task.resume()
+            
+        }
+    }
+    
+    public func playPlayback(completion: @escaping (Bool) -> Void) {
+        print("Getting new releases")
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/player/play"), type: .PUT) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    print("error")
+                    completion(true)
+                    return
+                }
+                do {
+                    print("Converting to json")
+                    let releases = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print("success")
+                    print(releases)
+                }
+                catch {
+                    print("error")
+                    completion(false)
+                }
+            }
+            task.resume()
+            
+        }
+    }
+    
     
     
     //MARK: - Search
@@ -411,6 +601,7 @@ final class APICaller {
     enum HTTPMethod: String{
         case GET
         case POST
+        case PUT
     }
         
     private func createRequest(with url: URL?, type: HTTPMethod, completion: @escaping (URLRequest) -> Void) {

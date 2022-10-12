@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3F0951E728E2DC5500025F67 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0951E628E2DC5500025F67 /* SDWebImage */; };
-		3F0951EA28E2DF1300025F67 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0951E928E2DF1300025F67 /* FirebaseAnalyticsSwift */; };
+		3F2F9C9328F5853000DBEAA8 /* CatalyzePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9228F5853000DBEAA8 /* CatalyzePlayerViewController.swift */; };
+		3F2F9C9528F58C2200DBEAA8 /* UserDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9428F58C2200DBEAA8 /* UserDevices.swift */; };
+		3F2F9C9728F6B18C00DBEAA8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9628F6B18C00DBEAA8 /* Player.swift */; };
 		3F8D117628D9C24A001B6A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D117528D9C24A001B6A8F /* AppDelegate.swift */; };
 		3F8D117828D9C24A001B6A8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D117728D9C24A001B6A8F /* SceneDelegate.swift */; };
 		3F8D117F28D9C24C001B6A8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8D117E28D9C24C001B6A8F /* Assets.xcassets */; };
@@ -48,6 +50,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F2F9C9228F5853000DBEAA8 /* CatalyzePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalyzePlayerViewController.swift; sourceTree = "<group>"; };
+		3F2F9C9428F58C2200DBEAA8 /* UserDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDevices.swift; sourceTree = "<group>"; };
+		3F2F9C9628F6B18C00DBEAA8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		3F8D117228D9C24A001B6A8F /* SpotifyPoC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotifyPoC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F8D117528D9C24A001B6A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F8D117728D9C24A001B6A8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,7 +98,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F0951EA28E2DF1300025F67 /* FirebaseAnalyticsSwift in Frameworks */,
 				3F0951E728E2DC5500025F67 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +105,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F2F9C9128F5850D00DBEAA8 /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				3F2F9C9228F5853000DBEAA8 /* CatalyzePlayerViewController.swift */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
 		3F8D116928D9C24A001B6A8F = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +146,7 @@
 		3F8D118928D9C29D001B6A8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3F2F9C9128F5850D00DBEAA8 /* Playback */,
 				3FB5765928DAC4EC00539736 /* Core */,
 				3FB5766228DAC59700539736 /* Others */,
 			);
@@ -161,6 +174,8 @@
 				3FAABEAC28E9C03000F5EDE1 /* SearchResult.swift */,
 				3FA9947728EAC1DD00F413F0 /* ArtistInfo.swift */,
 				3FA9947928EAF48900F413F0 /* SongRecommendations.swift */,
+				3F2F9C9428F58C2200DBEAA8 /* UserDevices.swift */,
+				3F2F9C9628F6B18C00DBEAA8 /* Player.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -243,7 +258,6 @@
 			name = SpotifyPoC;
 			packageProductDependencies = (
 				3F0951E628E2DC5500025F67 /* SDWebImage */,
-				3F0951E928E2DF1300025F67 /* FirebaseAnalyticsSwift */,
 			);
 			productName = SpotifyPoC;
 			productReference = 3F8D117228D9C24A001B6A8F /* SpotifyPoC.app */;
@@ -309,6 +323,7 @@
 				3FB5767228DAF18C00539736 /* Playlist.swift in Sources */,
 				3FCA5D4828E8532800B017CF /* CreatePlaylistViewController.swift in Sources */,
 				3FB5766E28DAF15900539736 /* HapticManager.swift in Sources */,
+				3F2F9C9528F58C2200DBEAA8 /* UserDevices.swift in Sources */,
 				3F8FDCFC28E727E1004BD4C7 /* CatalyzeViewController.swift in Sources */,
 				3FB5766C28DAF14E00539736 /* AuthManager.swift in Sources */,
 				3FCA5D4A28E853A300B017CF /* SongInputViewController.swift in Sources */,
@@ -327,6 +342,7 @@
 				3FB5767828DAF1A900539736 /* UserProfile.swift in Sources */,
 				3FB5766A28DAD7FE00539736 /* PlayerViewController.swift in Sources */,
 				3FCA5D4E28E932BF00B017CF /* SearchResults.swift in Sources */,
+				3F2F9C9328F5853000DBEAA8 /* CatalyzePlayerViewController.swift in Sources */,
 				3FB5767628DAF19E00539736 /* Artist.swift in Sources */,
 				3FCA5D5028E94BE000B017CF /* SearchResultsViewController.swift in Sources */,
 				3FB5765D28DAC54B00539736 /* AuthViewController.swift in Sources */,
@@ -337,6 +353,7 @@
 				3FB5767E28DC5F7D00539736 /* ProfileViewController.swift in Sources */,
 				3FB5767C28DB46D900539736 /* AuthResponse.swift in Sources */,
 				3F8D117828D9C24A001B6A8F /* SceneDelegate.swift in Sources */,
+				3F2F9C9728F6B18C00DBEAA8 /* Player.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,11 +586,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F0951E528E2DC5500025F67 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
-		};
-		3F0951E928E2DF1300025F67 /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3F0951E828E2DF1300025F67 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
