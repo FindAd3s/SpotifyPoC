@@ -8,6 +8,7 @@
 import Foundation
 
 struct Player: Codable{
+    let is_playing: Bool
     let item: Item
     let progress_ms: Double
 }

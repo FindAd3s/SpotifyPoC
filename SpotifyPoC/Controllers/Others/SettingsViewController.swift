@@ -63,13 +63,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             DispatchQueue.main.async {
                 self?.viewPlayer()
             }
-        }), Option(title: "Pause Music", handler: {[weak self] in
+        }), Option(title: "Play/Pause Music", handler: {[weak self] in
             DispatchQueue.main.async {
-                self?.viewPause()
+                self?.controlPlayback()
             }
-        }), Option(title: "Play Music", handler: {[weak self] in
+        }), Option(title: "Next Song", handler: {[weak self] in
             DispatchQueue.main.async {
-                self?.viewPlay()
+                self?.nextSong()
+            }
+        }), Option(title: "Previous Song", handler: {[weak self] in
+            DispatchQueue.main.async {
+                self?.prevSong()
             }
         })]))
         
@@ -145,35 +149,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    private func viewPause(){
-//        let vc = CatalyzeViewController()
-//        vc.title = "Catalyze"
-//        vc.navigationItem.largeTitleDisplayMode = .never
-//        navigationController?.pushViewController(vc, animated: true)
-        
-        APICaller.shared.pausePlayback {success in
-            if success {
-                print("Created Playlist")
-            }
-            else {
-                print("Playlist creation failed")
-            }
-        }
+    private func controlPlayback(){
+
+        APICaller.shared.controlPlayback()
     }
-    private func viewPlay(){
-//        let vc = CatalyzeViewController()
-//        vc.title = "Catalyze"
-//        vc.navigationItem.largeTitleDisplayMode = .never
-//        navigationController?.pushViewController(vc, animated: true)
+    private func nextSong(){
         
-        APICaller.shared.playPlayback {success in
-            if success {
-                print("Created Playlist")
-            }
-            else {
-                print("Playlist creation failed")
-            }
-        }
+        APICaller.shared.nextSongPlayback()
+        
+//        APICaller.shared.nextSongPlayback {success in
+//            if success {
+//                print("Next Song")
+//            }
+//            else {
+//                print("Control failed")
+//            }
+//        }
+    }
+    private func prevSong(){
+        
+        APICaller.shared.prevSongPlayback()
     }
     
     

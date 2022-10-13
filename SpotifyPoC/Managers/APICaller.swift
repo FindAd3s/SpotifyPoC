@@ -47,7 +47,7 @@ final class APICaller {
         
         static var searchURL = ""
         static var artistURL = ""
-        static var getRecoURL = "" // /recommendations?limit='+ LIMIT + '&market=' + MARKET + '&seed_artists=' + SEED_ARTIST + '&seed_genres=' + SEED_GENRES + '&seed_tracks=' + SEED_TRACKS
+        static var getRecoURL = ""
         static var addToPlaylistURL = ""
         
         /// Song Details from search
@@ -75,6 +75,7 @@ final class APICaller {
     
     struct PlaybackConstants{
         static var deviceID = ""
+        static var playbackURL = ""
     }
     
     enum APIError: Error{
@@ -167,7 +168,7 @@ final class APICaller {
         
         print(convQuery!)
         
-        CatalyzeConstants.searchURL = Constants.baseAPIURL + "/search?limit=10&type=track,artist&market=ES&q=\(convQuery!)"
+        CatalyzeConstants.searchURL = Constants.baseAPIURL + "/search?limit=50&type=track,artist&market=ES&q=\(convQuery!)"
         
         print(CatalyzeConstants.searchURL)
         
@@ -461,8 +462,8 @@ final class APICaller {
            }
         
         let playerStateURL = Constants.baseAPIURL + "/me/player?market=ES"
-        print(playerStateURL)
-        print(PlaybackConstants.deviceID)
+//        print(playerStateURL)
+//        print(PlaybackConstants.deviceID)
         
         
         createRequest(with: URL(string: playerStateURL), type: .GET){ request in
@@ -487,9 +488,17 @@ final class APICaller {
                     let duration = Int(durationD).msToSeconds.minuteSecond
                     let progressD = result.progress_ms
                     let progress = Int(progressD).msToSeconds.minuteSecond
+                    print("Is song still playing: \(result.is_playing)")
                     print("Song: \(result.item.name)")
                     print("Duration: \(progress) of \(duration)")
-                    
+//                    if result.is_playing == true{
+//                        print("\nSong is Playing\n")
+//                        PlaybackConstants.playbackURL = Constants.baseAPIURL + "/me/player/pause"
+//                    }
+//                    else{
+//                        print("\nSong is not playing\n")
+//                        PlaybackConstants.playbackURL = Constants.baseAPIURL + "/me/player/play"
+//                    }
                     completion(.success(result))
                 }
                 catch{
@@ -518,8 +527,49 @@ final class APICaller {
         
     }
     
+    public func controlPlayback(){
+        self.getPlayerState{ result in
+               DispatchQueue.main.async{
+                   switch result {
+                   case .success(let model):
+                       print(model.is_playing)
+                       if model.is_playing == true{
+                           print("\nSong is Playing\n")
+                           self.pausePlayback {success in
+                               if success {
+                                   print("Control Successful")
+                               }
+                               else {
+                                   print("Control failed")
+                               }
+                           }
+                           print("Song is now paused")
+                       }
+                       else{
+                           print("\nSong is not playing\n")
+                           self.playPlayback {success in
+                               if success {
+                                   print("Control Successful")
+                               }
+                               else {
+                                   print("Control failed")
+                               }
+                           }
+                           print("Song is now playing")
+                           
+                       }
+                   case .failure(let error):
+                       
+                       print(error.localizedDescription)
+                   }
+               }
+           }
+        
+        print(PlaybackConstants.playbackURL)
+    }
+    
     public func pausePlayback(completion: @escaping (Bool) -> Void) {
-        print("Getting new releases")
+        
         createRequest(with: URL(string: Constants.baseAPIURL + "/me/player/pause"), type: .PUT) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
@@ -528,7 +578,7 @@ final class APICaller {
                     return
                 }
                 do {
-                    print("Converting to json")
+                    print("Sending control")
                     let releases = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     print("success")
                     print(releases)
@@ -562,6 +612,26 @@ final class APICaller {
                     print("error")
                     completion(false)
                 }
+            }
+            task.resume()
+            
+        }
+    }
+    
+    public func nextSongPlayback() {
+        
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/player/next"), type: .POST) { request in
+            let task = URLSession.shared.dataTask(with: request) { _,_,_ in
+            }
+            task.resume()
+            
+        }
+    }
+    
+    public func prevSongPlayback() {
+        
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/player/previous"), type: .POST) { request in
+            let task = URLSession.shared.dataTask(with: request) {_,_,_ in
             }
             task.resume()
             
