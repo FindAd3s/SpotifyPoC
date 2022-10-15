@@ -340,7 +340,8 @@ final class APICaller {
                 self?.createRequest(with: URL(string: urlString), type: .POST){ baseRequest in
                     var request = baseRequest
                     let json = [
-                        "name": "Catalyze Playlist based on \(CatalyzeConstants.songName)"
+                        "name": "Catalyze Playlist based on \(CatalyzeConstants.songName)",
+                        "description": "Catalyzed based on USER'S EMOTION" /// Where you insert the DESCRIPTION of the playlist
                     ]
                     
                     request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
