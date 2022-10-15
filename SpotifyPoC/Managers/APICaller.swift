@@ -168,7 +168,7 @@ final class APICaller {
         
         print(convQuery!)
         
-        CatalyzeConstants.searchURL = Constants.baseAPIURL + "/search?limit=50&type=track,artist&market=ES&q=\(convQuery!)"
+        CatalyzeConstants.searchURL = Constants.baseAPIURL + "/search?limit=1&type=track,artist&market=ES&q=\(convQuery!)"
         
         print(CatalyzeConstants.searchURL)
         
@@ -182,13 +182,13 @@ final class APICaller {
                 }
                 do {
                     print("Converting to json")
-//                    let releases = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                    print(releases)
+                    let releases = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(releases)
                     let search = try JSONDecoder().decode(SearchResults.self, from: data)
-                    CatalyzeConstants.artistID = search.tracks.items[0].album.artists[0].id /// First Result being used
-                    CatalyzeConstants.songID = search.tracks.items[0].album.id /// First Result being used
+                    CatalyzeConstants.artistID = search.tracks.items[0].artists[0].id /// First Result being used
+                    CatalyzeConstants.songID = search.tracks.items[0].id /// First Result being used
                     CatalyzeConstants.songName = search.tracks.items[0].name
-                    CatalyzeConstants.artistName = search.tracks.items[0].album.artists[0].name
+                    CatalyzeConstants.artistName = search.tracks.items[0].artists[0].name
 //                    var searchResults: [SearchResult] = []
 //                    searchResults.append(contentOf)
                     
@@ -197,9 +197,10 @@ final class APICaller {
                     for songs in (search.tracks.items){
                         
                         print("\nSong: \(songs.name)")
-                        print("Artist: \(songs.album.artists[0].name)")
+                        print("Artist: \(songs.artists[0].name)")
                         print("Artist ID: \(songs.album.id)")
-                        print("Song ID: \((songs.album.artists.first?.id)!)")
+                        print("Song ID: \(songs.id)")
+                        print("Song URI: \(songs.uri)")
                         
                     }
                     
@@ -243,6 +244,8 @@ final class APICaller {
                 }
                 do {
                     print("Converting to json")
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(json)
                     let search = try JSONDecoder().decode(ArtistInfo.self, from: data)
                     print(search.genres)
                     let array = search.genres
@@ -482,9 +485,9 @@ final class APICaller {
                     return
                 }
                 do {
-                    let status = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    let status = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     let result = try JSONDecoder().decode(Player.self, from: data)
-                    var durationD = result.item.duration_ms
+                    let durationD = result.item.duration_ms
                     let duration = Int(durationD).msToSeconds.minuteSecond
                     let progressD = result.progress_ms
                     let progress = Int(progressD).msToSeconds.minuteSecond

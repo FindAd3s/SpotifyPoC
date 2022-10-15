@@ -14,15 +14,18 @@ struct SearchResults: Codable {
 struct Tracks: Codable{
 //    let limit: Int
     let items: [Items]
+    
 }
 
 struct Items: Codable {
     let album: Album
     let name: String
+    let artists: [Artists]
+    let uri: String
+    let id: String
 }
 
 struct Album: Codable{
-    let artists: [Artists]
     let id: String
 }
 

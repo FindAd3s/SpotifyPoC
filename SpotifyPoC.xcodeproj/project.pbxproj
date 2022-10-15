@@ -11,6 +11,7 @@
 		3F2F9C9328F5853000DBEAA8 /* CatalyzePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9228F5853000DBEAA8 /* CatalyzePlayerViewController.swift */; };
 		3F2F9C9528F58C2200DBEAA8 /* UserDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9428F58C2200DBEAA8 /* UserDevices.swift */; };
 		3F2F9C9728F6B18C00DBEAA8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9628F6B18C00DBEAA8 /* Player.swift */; };
+		3F2F9C9928FAC62A00DBEAA8 /* Catalyze Playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9828FAC62900DBEAA8 /* Catalyze Playlist.png */; };
 		3F8D117628D9C24A001B6A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D117528D9C24A001B6A8F /* AppDelegate.swift */; };
 		3F8D117828D9C24A001B6A8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D117728D9C24A001B6A8F /* SceneDelegate.swift */; };
 		3F8D117F28D9C24C001B6A8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8D117E28D9C24C001B6A8F /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		3F2F9C9228F5853000DBEAA8 /* CatalyzePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalyzePlayerViewController.swift; sourceTree = "<group>"; };
 		3F2F9C9428F58C2200DBEAA8 /* UserDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDevices.swift; sourceTree = "<group>"; };
 		3F2F9C9628F6B18C00DBEAA8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		3F2F9C9828FAC62900DBEAA8 /* Catalyze Playlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Catalyze Playlist.png"; sourceTree = "<group>"; };
 		3F8D117228D9C24A001B6A8F /* SpotifyPoC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotifyPoC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F8D117528D9C24A001B6A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F8D117728D9C24A001B6A8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		3F8D118B28D9C2C1001B6A8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3F2F9C9828FAC62900DBEAA8 /* Catalyze Playlist.png */,
 				3FB5767128DAF18C00539736 /* Playlist.swift */,
 				3FB5767328DAF19700539736 /* AudioTrack.swift */,
 				3FB5767528DAF19E00539736 /* Artist.swift */,
@@ -306,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F8D118228D9C24C001B6A8F /* LaunchScreen.storyboard in Resources */,
+				3F2F9C9928FAC62A00DBEAA8 /* Catalyze Playlist.png in Resources */,
 				3F8D117F28D9C24C001B6A8F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
