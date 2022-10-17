@@ -17,10 +17,21 @@ struct Item: Codable{
     let name: String
     let duration_ms: Double
     let album: Album1
+    let artists: [Artists1]
 }
 
 struct Album1: Codable{
-    
+    let images: [Images1]
+}
+
+struct Images1: Codable {
+    let url: String
+}
+
+struct Artists1: Codable {
+    let name: String
+    let id: String
+    let uri: String
 }
 
 /*

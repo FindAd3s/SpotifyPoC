@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F029F5728FD7CDF00A2A3BF /* RandomRecommendationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F029F5628FD7CDF00A2A3BF /* RandomRecommendationViewController.swift */; };
 		3F0951E728E2DC5500025F67 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0951E628E2DC5500025F67 /* SDWebImage */; };
 		3F2F9C9328F5853000DBEAA8 /* CatalyzePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9228F5853000DBEAA8 /* CatalyzePlayerViewController.swift */; };
 		3F2F9C9528F58C2200DBEAA8 /* UserDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F9C9428F58C2200DBEAA8 /* UserDevices.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F029F5628FD7CDF00A2A3BF /* RandomRecommendationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomRecommendationViewController.swift; sourceTree = "<group>"; };
 		3F2F9C9228F5853000DBEAA8 /* CatalyzePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalyzePlayerViewController.swift; sourceTree = "<group>"; };
 		3F2F9C9428F58C2200DBEAA8 /* UserDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDevices.swift; sourceTree = "<group>"; };
 		3F2F9C9628F6B18C00DBEAA8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				3FCA5D4B28E8540300B017CF /* RecommendationViewController.swift */,
 				3FAABEAA28E9A0D700F5EDE1 /* CatalyzeSearchViewController.swift */,
 				3FA9947B28EAF51800F413F0 /* GetRecommendationsViewController.swift */,
+				3F029F5628FD7CDF00A2A3BF /* RandomRecommendationViewController.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				3FCA5D5028E94BE000B017CF /* SearchResultsViewController.swift in Sources */,
 				3FB5765D28DAC54B00539736 /* AuthViewController.swift in Sources */,
 				3FB5766628DAC5B700539736 /* PlaylistViewController.swift in Sources */,
+				3F029F5728FD7CDF00A2A3BF /* RandomRecommendationViewController.swift in Sources */,
 				3FCA5D4C28E8540300B017CF /* RecommendationViewController.swift in Sources */,
 				3F8D117628D9C24A001B6A8F /* AppDelegate.swift in Sources */,
 				3FB5765828DAC4E600539736 /* LibraryViewController.swift in Sources */,

@@ -49,6 +49,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 self?.viewRecommendations()
                 
             }
+        }), Option(title: "Get Random Recommendation", handler: {[weak self] in
+            DispatchQueue.main.async {
+                self?.viewRandomRecommendations()
+                
+            }
         }), Option(title: "Create Playlist", handler: {[weak self] in
             DispatchQueue.main.async {
                 self?.viewCreatePlaylist()
@@ -107,6 +112,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private func viewRecommendations(){
         let vc = RecommendationViewController()
+        vc.title = "Get Recommendation"
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func viewRandomRecommendations(){
+        let vc = RandomRecommendationViewController()
         vc.title = "Get Recommendation"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)

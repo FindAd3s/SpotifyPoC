@@ -62,6 +62,7 @@ final class APICaller {
         
         /// Song Recommendation Vartiables
         
+        static var keySongURI = ""
         static var songURI = ""
         static var songNames = [String].self
         static var artistNames = [String].self
@@ -189,6 +190,7 @@ final class APICaller {
                     CatalyzeConstants.songID = search.tracks.items[0].id /// First Result being used
                     CatalyzeConstants.songName = search.tracks.items[0].name
                     CatalyzeConstants.artistName = search.tracks.items[0].artists[0].name
+                    CatalyzeConstants.keySongURI = search.tracks.items[0].uri
 //                    var searchResults: [SearchResult] = []
 //                    searchResults.append(contentOf)
                     
@@ -281,7 +283,7 @@ final class APICaller {
     public func getRecommendations(completion: @escaping ((Result<String, Error>)) -> Void) {
         
         print("Getting Recommendations")
-        CatalyzeConstants.getRecoURL = Constants.baseAPIURL + "/recommendations?limit=20&market=ES&seed_artists=\(CatalyzeConstants.artistID)&seed_genres=\(CatalyzeConstants.genres)&seed_tracks=\(CatalyzeConstants.songID)"
+        CatalyzeConstants.getRecoURL = Constants.baseAPIURL + "/recommendations?limit=49&market=ES&seed_artists=\(CatalyzeConstants.artistID)&seed_genres=\(CatalyzeConstants.genres)&seed_tracks=\(CatalyzeConstants.songID)"
         print(CatalyzeConstants.getRecoURL)
         createRequest(with: URL(string: CatalyzeConstants.getRecoURL), type: .GET) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -295,6 +297,58 @@ final class APICaller {
 //                    let releases = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     print("success")
 //                    print(releases)
+                    let search = try JSONDecoder().decode(SongRecommendations.self, from: data)
+//                    print(search)
+                    
+                    print("Song Recommendations")
+                    var songURIArray = [CatalyzeConstants.keySongURI]
+                    var songArray = []
+                    var artistArray = []
+                    
+                    
+                    for song in search.tracks{
+                        print("\nSong: \(song.name)")
+                        print("Artist: \(song.artists[0].name)")
+                        print("URI: \(song.uri)")
+                        songURIArray.append(song.uri)
+                        songArray.append(song.name)
+                        artistArray.append(song.artists[0].name)
+                    }
+                    
+                    CatalyzeConstants.songURI = NSArray(array:songURIArray).componentsJoined(by: ",")
+                    print(CatalyzeConstants.songURI)
+                    
+//                    CatalyzeConstants.songNames = songArray
+//                    CatalyzeConstants.artistNames = artistArray
+                    
+                }
+                catch {
+                    print("error")
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+            
+        }
+    }
+    
+    public func getRandomRecommendations(completion: @escaping ((Result<String, Error>)) -> Void) {
+        
+        print("Getting Recommendations")
+        CatalyzeConstants.getRecoURL = Constants.baseAPIURL + "/recommendations?limit=20&min_valence=0.5&max_valence=0.6&min_arousal=0.5&max_valence=0.6"
+        print(CatalyzeConstants.getRecoURL)
+        createRequest(with: URL(string: CatalyzeConstants.getRecoURL), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    print("error")
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    print("Converting to json")
+                    let releases = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print("success")
+                    print(releases)
                     let search = try JSONDecoder().decode(SongRecommendations.self, from: data)
 //                    print(search)
                     
@@ -329,7 +383,6 @@ final class APICaller {
             
         }
     }
-    
     
     public func createPlaylist(completion: @escaping (Bool) -> Void){
         getCurrentUserProfile{ [weak self] result in
@@ -487,7 +540,9 @@ final class APICaller {
                 }
                 do {
 //                    let status = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    print(status)
                     let result = try JSONDecoder().decode(Player.self, from: data)
+                    print(result)
                     let durationD = result.item.duration_ms
                     let duration = Int(durationD).msToSeconds.minuteSecond
                     let progressD = result.progress_ms
