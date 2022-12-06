@@ -33,10 +33,10 @@ class SongInputViewController: UIViewController {
         
         APICaller.shared.searchSong(query: query){ result in
             switch result {
-            case .success(let model):
+            case .success(_):
                 print("success")
                 break
-            case .failure(let error):
+            case .failure(_):
                 print("failure")
                 break
             }

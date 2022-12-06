@@ -27,6 +27,7 @@ struct Items: Codable {
 
 struct Album: Codable{
     let id: String
+    let artists: [Artists]
 }
 
 struct Artists: Codable{

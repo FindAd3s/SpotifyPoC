@@ -201,6 +201,7 @@ final class APICaller {
                         print("\nSong: \(songs.name)")
                         print("Artist: \(songs.artists[0].name)")
                         print("Artist ID: \(songs.album.id)")
+                        print("Album Artists: \(songs.album.artists[0].name)")
                         print("Song ID: \(songs.id)")
                         print("Song URI: \(songs.uri)")
                         
@@ -310,6 +311,7 @@ final class APICaller {
                         print("\nSong: \(song.name)")
                         print("Artist: \(song.artists[0].name)")
                         print("URI: \(song.uri)")
+                        
                         songURIArray.append(song.uri)
                         songArray.append(song.name)
                         artistArray.append(song.artists[0].name)
@@ -335,7 +337,7 @@ final class APICaller {
     public func getRandomRecommendations(completion: @escaping ((Result<String, Error>)) -> Void) {
         
         print("Getting Recommendations")
-        CatalyzeConstants.getRecoURL = Constants.baseAPIURL + "/recommendations?limit=20&min_valence=0.5&max_valence=0.6&min_arousal=0.5&max_valence=0.6"
+        CatalyzeConstants.getRecoURL = Constants.baseAPIURL + "/recommendations?limit=20&seed_genres=&min_valence=0.5&max_valence=0.6&min_arousal=0.5&max_valence=0.6"
         print(CatalyzeConstants.getRecoURL)
         createRequest(with: URL(string: CatalyzeConstants.getRecoURL), type: .GET) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
